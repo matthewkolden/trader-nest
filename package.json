@@ -1,0 +1,8 @@
+{
+  "name": "trader-nest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:matthewkolden/trader-nest.git",
+  "author": "matthewkolden <matthewkolden2k@gmail.com>",
+  "license": "MIT"
+}

@@ -10,15 +10,9 @@ api_key.apiKey = process.env.FINNHUB_API_KEY
 const finnhubClient = new finnhub.DefaultApi()
 
 export default function Portfolio() {
-  finnhubClient.stockCandles(
-    'AAPL',
-    'D',
-    1590988249,
-    1591852249,
-    (error: any, data: any, response: any): void => {
-      console.log(data)
-    }
-  )
+  finnhubClient.quote('AAPL', (error: any, data: any, response: any): void => {
+    console.log(data)
+  })
 
   return (
     <>

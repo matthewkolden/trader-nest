@@ -1,13 +1,33 @@
-import chalk from "chalk";
+import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
 
-export function main() {
-  console.log(chalk.blue("Hello boiler 😉"));
-  console.log(
-    chalk.magenta(
-      "This is a basic TS node boilderplate\nI'll be using this in a lot of my projects!"
-    )
-  );
+const PORT = process.env.PORT || 3001;
 
-  return 0;
-}
-main();
+const app = express();
+app.use(express.json());
+app.use(morgan("dev"));
+
+const corsOptions = {
+  origin: "*",
+};
+
+app.use(cors(corsOptions));
+
+app.use(morgan('dev'))
+app.use(express.json())
+
+app.use((req, res, next) => {
+  res.locals.data = {}
+  next()
+})
+
+app.get('/api/test', (req, res) => {
+  res.json({ test: 'the api is working' })
+})
+
+app.listen(PORT, function () {
+  console.log(`Express app running on port ${PORT}`)
+})

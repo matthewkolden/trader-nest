@@ -3,8 +3,23 @@ import Head from 'next/head'
 import { Container, Box, Grid } from '@mui/material'
 
 import StockTable from '@/components/StockTable'
+const finnhub = require('finnhub')
+
+const api_key = finnhub.ApiClient.instance.authentications['api_key']
+api_key.apiKey = process.env.FINNHUB_API_KEY
+const finnhubClient = new finnhub.DefaultApi()
 
 export default function Portfolio() {
+  finnhubClient.stockCandles(
+    'AAPL',
+    'D',
+    1590988249,
+    1591852249,
+    (error: any, data: any, response: any): void => {
+      console.log(data)
+    }
+  )
+
   return (
     <>
       <Head>

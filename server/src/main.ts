@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+import { db } from './config/db'
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
@@ -28,6 +29,8 @@ app.get('/api/test', (req, res) => {
   res.json({ test: 'the api is working' })
 })
 
-app.listen(PORT, function () {
-  console.log(`Express app running on port ${PORT}`)
+db.on('connected', function () {
+  app.listen(PORT, function () {
+    console.log(`Express app running on port ${PORT}`)
+  })
 })

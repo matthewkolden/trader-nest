@@ -1,17 +1,27 @@
-import mongoose, { ConnectOptions } from 'mongoose';
+import mongoose, { ConnectOptions } from "mongoose";
 
 interface MongooseConnectOptions extends ConnectOptions {
   useNewUrlParser: boolean;
   useUnifiedTopology: boolean;
 }
 
-mongoose.connect(process.env.MONGO_URI as string, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-} as MongooseConnectOptions)
+export async function connect() {
+  try {
+    mongoose.connect(
+      process.env.MONGO_URI as string,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      } as MongooseConnectOptions
+    );
+  } catch (error) {
+    console.error("Could not connect to db");
+    process.exit(1);
+  }
+}
 
-export const db = mongoose.connection
+const db = mongoose.connection;
 
-db.on('connected', function () {
-  console.log(`Connected to ${db.name} at ${db.host}:${db.port}`)
-})
+db.on("connected", function () {
+  console.log(`Connected to ${db.name} at ${db.host}:${db.port}`);
+});

@@ -6,7 +6,7 @@ import cors from "cors";
 import { connect } from "./config/db";
 import router from "./routes/stocks";
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.json());

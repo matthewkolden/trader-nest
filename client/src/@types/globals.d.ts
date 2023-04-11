@@ -21,13 +21,6 @@ interface Quote {
   pc: Number
 }
 
-interface Quote {
-  // Stock name
-  ticker: string
-  // Current price
-  c: Number
-}
-
 interface Candle {
   // List of close prices for returned candles
   c: Array
@@ -45,8 +38,9 @@ interface Candle {
   v: Array
 }
 
-interface StockData {
-  stock: Stock
-  quote: Quote
-  candle: Candle
+interface Price {
+  // Stock name
+  ticker: string
+  // Current price
+  c: Number
 }

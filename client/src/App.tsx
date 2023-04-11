@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useStockStore } from './stores/useStockStore'
+import { ProvideController } from './controllers/Controller'
 
 import Performance from './components/Performance'
 import Value from './components/Value'
@@ -16,41 +17,43 @@ function App() {
 
   return (
     <div className="App">
-      <Box sx={{ display: 'flex' }}>
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Paper
-                sx={{
-                  p: 8,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography
-                  component="h1"
-                  variant="h2"
+      <ProvideController>
+        <Box sx={{ display: 'flex' }}>
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Paper
                   sx={{
-                    fontWeight: 'bold',
+                    p: 8,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
                   }}
                 >
-                  Keep track of everything in one place
-                </Typography>
-              </Paper>
+                  <Typography
+                    component="h1"
+                    variant="h2"
+                    sx={{
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Keep track of everything in one place
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={8} lg={9}>
+                <Performance />
+              </Grid>
+              <Grid item xs={12} md={4} lg={3}>
+                <Value />
+              </Grid>
+              <Grid item xs={12}>
+                <StockTable />
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={8} lg={9}>
-              <Performance />
-            </Grid>
-            <Grid item xs={12} md={4} lg={3}>
-              <Value />
-            </Grid>
-            <Grid item xs={12}>
-              <StockTable />
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
+          </Container>
+        </Box>
+      </ProvideController>
     </div>
   )
 }

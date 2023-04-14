@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import { stockService } from '../services/stockService'
-import { finnhubService } from '../services/finnhubService'
 
 interface StockStore {
   stocks: Stock[]

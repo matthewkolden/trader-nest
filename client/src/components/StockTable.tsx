@@ -1,3 +1,7 @@
+import { useStockStore } from '../stores/useStockStore'
+import { useController } from '../controllers/Controller'
+
+import Row from './Row'
 import {
   Paper,
   TableRow,
@@ -10,19 +14,10 @@ import {
 
 import Title from './Title'
 
-function createData(name: string, qty: number, price: number, total: number) {
-  return { name, qty, price, total }
-}
-
-const rows = [
-  createData('TSLA', 15, 190, 2850),
-  createData('NVDA', 2, 265, 530),
-  createData('AAPL', 5, 165, 825),
-  createData('MSFT', 4, 285, 1140),
-  createData('AMD', 10, 92, 920),
-]
-
 export default function StockTable() {
+  const { stocks, getAllStocks } = useStockStore()
+  const { prices } = useController()
+
   return (
     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
       <Title>Your Portfolio</Title>
@@ -38,18 +33,13 @@ export default function StockTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.qty}</TableCell>
-                <TableCell align="right">{row.price}</TableCell>
-                <TableCell align="right">{row.total}</TableCell>
-              </TableRow>
+            {stocks.map((stock, index) => (
+              <Row
+                name={stock.ticker}
+                qty={stock.quantity}
+                price={prices[stock.ticker]}
+                key={index}
+              />
             ))}
           </TableBody>
         </Table>

@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from 'react'
 import { useStockStore } from '../stores/useStockStore'
 import { finnhubService } from '../services/finnhubService'
 
@@ -38,6 +44,10 @@ function useHook() {
     }
     setPrices(newPrices)
   }
+
+  useEffect(() => {
+    fetchPrice()
+  }, [stocks])
 
   return { prices, fetchPrice }
 }

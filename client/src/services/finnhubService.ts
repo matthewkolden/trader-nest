@@ -34,8 +34,10 @@ class FinnhubService {
     const response = await this.instance.get(
       `/quote?symbol=${ticker}&token=${API_KEY}`
     )
+    const current = response.data.c
+    const close = response.data.pc
     // Current price
-    return response.data.c
+    return { current, close }
   }
 
   async getCandleWeek(ticker: string) {

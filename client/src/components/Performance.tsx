@@ -18,7 +18,6 @@ export default function Performance() {
         aria-label="outlined primary button group"
         sx={{ alignSelf: 'center' }}
       >
-        <Button>Day</Button>
         <Button>Week</Button>
         <Button>Month</Button>
         <Button>Year</Button>

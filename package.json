@@ -5,5 +5,7 @@
   "repository": "git@github.com:matthewkolden/trader-nest.git",
   "author": "matthewkolden <matthewkolden2k@gmail.com>",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "victory": "^36.6.8"
+  }
 }

@@ -15,8 +15,8 @@ import {
 import Title from './Title'
 
 export default function StockTable() {
-  const { stocks, getAllStocks } = useStockStore()
-  const { prices } = useController()
+  const { stocks } = useStockStore()
+  const { prices, prevPrices } = useController()
 
   return (
     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
@@ -38,6 +38,7 @@ export default function StockTable() {
                 name={stock.ticker}
                 qty={stock.quantity}
                 price={prices[stock.ticker]}
+                prevPrice={prevPrices[stock.ticker]}
                 key={index}
               />
             ))}

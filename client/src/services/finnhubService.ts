@@ -54,19 +54,23 @@ class FinnhubService {
   async getCandleMonth(ticker: string) {
     // Every 5 days for a month
     const response = await this.instance.get(
-      `stock/candle?symbol=${ticker}&resolution=5&from=${unixTimestampOneMonthAgo}&to=${unixTimestampOneDayAgo}&token=${API_KEY}`
+      `stock/candle?symbol=${ticker}&resolution=D&from=${unixTimestampOneMonthAgo}&to=${unixTimestampOneDayAgo}&token=${API_KEY}`
     )
     // List of close prices for returned candles.
-    return response.data.c
+    const prices = response.data.c
+    const dates = response.data.t
+    return { prices, dates }
   }
 
   async getCandleYear(ticker: string) {
     // Every month for a year
     const response = await this.instance.get(
-      `stock/candle?symbol=${ticker}&resolution=M&from=${unixTimestampOneYearAgo}&to=${unixTimestampOneDayAgo}&token=${API_KEY}`
+      `stock/candle?symbol=${ticker}&resolution=D&from=${unixTimestampOneYearAgo}&to=${unixTimestampOneDayAgo}&token=${API_KEY}`
     )
     // List of close prices for returned candles.
-    return response.data.c
+    const prices = response.data.c
+    const dates = response.data.t
+    return { prices, dates }
   }
 }
 

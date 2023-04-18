@@ -45,7 +45,10 @@ function App() {
                 <Performance />
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
-                <Value />
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                  <Value />
+                  <Value />
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <StockTable />

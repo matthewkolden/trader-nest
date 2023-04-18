@@ -46,7 +46,9 @@ function useHook() {
   const [loading, setLoading] = useState(false)
 
   const [weekData, setWeekData] = useState<HistoricalPrices>({})
-  const [weekTotals, setWeekTotals] = useState([])
+  const [monthData, setMonthData] = useState<HistoricalPrices>({})
+  const [yearData, setYearData] = useState<HistoricalPrices>({})
+
   // const [weekTotals, setWeekTotals] = useState<Prices>({})
   // const [monthData, setMonthData] = useState<HistoricalPrices>({})
   // const [yearData, setYearData] = useState<HistoricalPrices>({})
@@ -79,27 +81,69 @@ function useHook() {
           newWeekData[date] = {}
         }
         newWeekData[date][stock.ticker] = price
+        if (!newWeekData[date]['total']) {
+          newWeekData[date]['total'] = price * stock.quantity
+        } else {
+          newWeekData[date]['total'] += price * stock.quantity
+        }
       }
     }
+
     setWeekData(newWeekData)
     setLoading(false)
   }
 
-  // function getWeekTotals() {
-  //   const newWeekTotals = []
-  //   for (const date of weekData) {
-  //     let sum = 0
-  //     for (const stock of stocks) {
-  //       sum += date[stock.ticker] * stock.quantity
-  //     }
-  //     const total = {
-  //       x: x,
-  //       y: sum
-  //     }
-  //     newWeekTotals.push(total)
-  //   }
-  //   setWeekTotals(newWeekTotals)
-  // }
+  async function fetchMonthData() {
+    setLoading(true)
+    const newMonthData: HistoricalPrices = {}
+
+    for (const stock of stocks) {
+      const { prices, dates } = await finnhubService.getCandleMonth(
+        stock.ticker
+      )
+      for (let i = 0; i < dates.length; i++) {
+        const date = dates[i]
+        const price = prices[i]
+        if (!newMonthData[date]) {
+          newMonthData[date] = {}
+        }
+        newMonthData[date][stock.ticker] = price
+        if (!newMonthData[date]['total']) {
+          newMonthData[date]['total'] = price * stock.quantity
+        } else {
+          newMonthData[date]['total'] += price * stock.quantity
+        }
+      }
+    }
+
+    setMonthData(newMonthData)
+    setLoading(false)
+  }
+
+  async function fetchYearData() {
+    setLoading(true)
+    const newYearData: HistoricalPrices = {}
+
+    for (const stock of stocks) {
+      const { prices, dates } = await finnhubService.getCandleYear(stock.ticker)
+      for (let i = 0; i < dates.length; i++) {
+        const date = dates[i]
+        const price = prices[i]
+        if (!newYearData[date]) {
+          newYearData[date] = {}
+        }
+        newYearData[date][stock.ticker] = price
+        if (!newYearData[date]['total']) {
+          newYearData[date]['total'] = price * stock.quantity
+        } else {
+          newYearData[date]['total'] += price * stock.quantity
+        }
+      }
+    }
+
+    setYearData(newYearData)
+    setLoading(false)
+  }
 
   function getTotalValue() {
     if (Object.keys(prices).length > 0) {
@@ -121,6 +165,8 @@ function useHook() {
 
   useEffect(() => {
     fetchWeekData()
+    fetchMonthData()
+    fetchYearData()
     fetchPrice()
   }, [stocks])
 
@@ -132,6 +178,9 @@ function useHook() {
     prices,
     prevPrices,
     fetchPrice,
+    weekData,
+    monthData,
+    yearData,
     totalValue,
     totalPrevValue,
     loading,

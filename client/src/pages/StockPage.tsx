@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 import StockPerformance from '../components/StockPerformance'
 import StockValue from '../components/StockValue'
+import StockTotalValue from '../components/StockTotalValue'
 import StockTableForm from '../components/StockTableForm'
 import Movers from '../components/Movers'
 
@@ -16,7 +17,7 @@ export default function StockPage() {
 
   useEffect(() => {
     getOneStock(id)
-  }, [])
+  }, [id])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -26,13 +27,19 @@ export default function StockPage() {
             <StockPerformance stock={stock} />
           </Grid>
           <Grid item xs={12} md={4} lg={3}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+                gap: 3,
+                justifyContent: 'space-between',
+              }}
+            >
               <StockValue stock={stock} />
+              <StockTotalValue stock={stock} />
               <Movers />
             </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <StockTableForm stock={stock} />
           </Grid>
         </Grid>
       </Container>

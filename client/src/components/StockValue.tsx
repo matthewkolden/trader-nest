@@ -44,17 +44,13 @@ function Loaded(props: StockPerformanceProps) {
         height: 240,
       }}
     >
-      <Title>{stock.ticker} Value</Title>
+      <Title>{stock.ticker} Price</Title>
       <Typography component="p" variant="h4">
         ${prices[stock.ticker]}
-      </Typography>
-      <Typography component="p" variant="h4">
-        ${value.toFixed(2)}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         on {formattedDate} ({percentageChange}%)
       </Typography>
-      <Typography color="text.secondary">{stock.quantity} shares</Typography>
     </Paper>
   )
 }

@@ -8,12 +8,13 @@ interface StockStore {
   createNewStock: (stock: Stock) => Promise<void>
   getOneStock: (id?: string) => Promise<void>
   updateStock: (stock: Stock) => Promise<void>
-  deleteStock: (id: number) => Promise<void>
+  deleteStock: (id: string) => Promise<void>
 }
 
 const defaultStock: Stock = {
   ticker: '',
   quantity: 0,
+  _id: '0',
 }
 
 export const useStockStore = create<StockStore>((set, get) => ({
@@ -34,10 +35,8 @@ export const useStockStore = create<StockStore>((set, get) => ({
 
   createNewStock: async (stock) => {
     try {
-      const { getAllStocks } = get()
-
       await stockService.create(stock)
-      await getAllStocks()
+      await get().getAllStocks()
     } catch (error) {
       console.error(error)
     }
@@ -50,6 +49,7 @@ export const useStockStore = create<StockStore>((set, get) => ({
         stock: {
           ticker: data.ticker,
           quantity: data.quantity,
+          _id: data._id,
         },
       }))
     } catch (error) {
@@ -58,20 +58,18 @@ export const useStockStore = create<StockStore>((set, get) => ({
   },
 
   updateStock: async (stock) => {
-    const { getAllStocks } = get()
     try {
       await stockService.update(stock)
-      await getAllStocks()
+      await get().getAllStocks()
     } catch (error) {
       console.error(error)
     }
   },
 
   deleteStock: async (id) => {
-    const { getAllStocks } = get()
     try {
       await stockService.delete(String(id))
-      await getAllStocks()
+      await get().getAllStocks()
     } catch (error) {
       console.error(error)
     }

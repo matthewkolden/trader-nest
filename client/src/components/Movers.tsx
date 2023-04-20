@@ -66,6 +66,7 @@ function Loaded() {
                 price={prices[stock.ticker]}
                 prevPrice={prevPrices[stock.ticker]}
                 key={index}
+                id={stock._id}
               />
             ))}
           </TableBody>

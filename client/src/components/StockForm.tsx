@@ -7,7 +7,7 @@ export default function StockForm() {
   const { createNewStock } = useStockStore()
   const [formData, setFormData] = useState({
     ticker: '',
-    quantity: 0,
+    quantity: null,
   })
 
   const [error, setError] = useState('')
@@ -22,7 +22,7 @@ export default function StockForm() {
       await createNewStock(formData)
       setFormData({
         ticker: '',
-        quantity: 0,
+        quantity: null,
       })
     } catch {
       setError('Creation Failed - Try Again')

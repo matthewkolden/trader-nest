@@ -15,13 +15,29 @@ import { useController } from '../controllers/Controller'
 
 interface StockPerformanceProps {
   stock: Stock
+  weekData: {
+    [key: string]: number
+  }
+  monthData: {
+    [key: string]: number
+  }
+  yearData: {
+    [key: string]: number
+  }
 }
 
 export default function StockPerformance(props: StockPerformanceProps) {
-  const { loading, weekData } = useController()
+  const { loading, weekData, monthData, yearData } = useController()
   const { stock } = props
-  if (!loading && weekData) {
-    return <Loaded stock={stock} />
+  if (!loading && stock && weekData && monthData && yearData) {
+    return (
+      <Loaded
+        stock={stock}
+        weekData={weekData}
+        monthData={monthData}
+        yearData={yearData}
+      />
+    )
   } else {
     return <Loading />
   }
@@ -29,7 +45,7 @@ export default function StockPerformance(props: StockPerformanceProps) {
 
 function Loaded(props: StockPerformanceProps) {
   const { ticker } = props.stock
-  const { weekData, monthData, yearData } = useController()
+  const { weekData, monthData, yearData } = props
 
   const [lineData, setLineData] = useState(weekData)
 

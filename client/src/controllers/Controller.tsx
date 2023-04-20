@@ -38,7 +38,7 @@ export const useController = () => {
 }
 
 function useHook() {
-  const { stocks } = useStockStore()
+  const { stocks, getAllStocks } = useStockStore()
   const [prices, setPrices] = useState<Prices>({})
   const [prevPrices, setPrevPrices] = useState<Prices>({})
   const [totalValue, setTotalValue] = useState<number | null>(null)
@@ -160,10 +160,10 @@ function useHook() {
   }
 
   useEffect(() => {
+    fetchPrice()
     fetchWeekData()
     fetchMonthData()
     fetchYearData()
-    fetchPrice()
   }, [stocks])
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 interface Stock {
-  id?: number
+  _id?: number
   ticker: string
   quantity: number
 }

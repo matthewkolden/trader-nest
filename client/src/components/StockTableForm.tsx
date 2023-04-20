@@ -12,17 +12,19 @@ import {
   Table,
 } from '@mui/material'
 
-import StockForm from './StockForm'
-
 import Title from './Title'
 
-export default function StockTable() {
-  const { stocks } = useStockStore()
+interface StockPerformanceProps {
+  stock: Stock
+}
+
+export default function StockTableForm(props: StockPerformanceProps) {
   const { prices } = useController()
+  const { stock } = props
 
   return (
     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-      <Title>Your Portfolio</Title>
+      <Title>Your {stock.ticker}</Title>
 
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -35,15 +37,18 @@ export default function StockTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {stocks.map((stock, index) => (
-              <Row
-                name={stock.ticker}
-                qty={stock.quantity}
-                price={prices[stock.ticker]}
-                id={stock._id}
-                key={index}
-              />
-            ))}
+            <TableRow
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {stock.ticker}
+              </TableCell>
+              <TableCell align="right">{stock.quantity}</TableCell>
+              <TableCell align="right">{prices[stock.ticker]}</TableCell>
+              <TableCell align="right">
+                {stock.quantity * prices[stock.ticker]}
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

@@ -49,10 +49,6 @@ function useHook() {
   const [monthData, setMonthData] = useState<HistoricalPrices>({})
   const [yearData, setYearData] = useState<HistoricalPrices>({})
 
-  // const [weekTotals, setWeekTotals] = useState<Prices>({})
-  // const [monthData, setMonthData] = useState<HistoricalPrices>({})
-  // const [yearData, setYearData] = useState<HistoricalPrices>({})
-
   async function fetchPrice() {
     setLoading(true)
     const newPrices: Prices = {}

@@ -23,7 +23,7 @@ class StockService {
     return await this.instance.post('/stocks/', { ...stock })
   }
   async update(stock: Stock) {
-    return await this.instance.put(`/stocks/${stock.id}`, { ...stock })
+    return await this.instance.put(`/stocks/${stock._id}`, { ...stock })
   }
   async delete(id: string) {
     return await this.instance.delete(`/stocks/${id}`)

@@ -13,23 +13,28 @@ import {
 import Title from './Title'
 import { useController } from '../controllers/Controller'
 
-export default function Performance() {
-  const { loading, weekData } = useController()
+interface StockPerformanceProps {
+  stock: Stock
+}
 
+export default function StockPerformance(props: StockPerformanceProps) {
+  const { loading, weekData } = useController()
+  const { stock } = props
   if (!loading && weekData) {
-    return <Loaded />
+    return <Loaded stock={stock} />
   } else {
     return <Loading />
   }
 }
 
-function Loaded() {
+function Loaded(props: StockPerformanceProps) {
+  const { ticker } = props.stock
   const { weekData, monthData, yearData } = useController()
 
   const [lineData, setLineData] = useState(weekData)
 
   const data = Object.entries(lineData).map(([date, values]) => {
-    return { x: new Date(date * 1000), y: values.total }
+    return { x: new Date(date * 1000), y: values[ticker] }
   })
 
   return (
@@ -40,7 +45,7 @@ function Loaded() {
         flexDirection: 'column',
       }}
     >
-      <Title>Portfolio Performance</Title>
+      <Title>{ticker} Performance</Title>
       <ButtonGroup
         variant="contained"
         aria-label="outlined primary button group"
@@ -73,7 +78,7 @@ function Loaded() {
         theme={VictoryTheme.material}
       >
         <VictoryAxis tickFormat={(tick) => ''} label="Time" />
-        <VictoryAxis dependentAxis tickFormat={(tick) => tick / 1000} />
+        <VictoryAxis dependentAxis />
         <VictoryLine
           labelComponent={<VictoryTooltip />}
           data={data}

@@ -4,19 +4,26 @@ import { Typography, Link, Paper, CircularProgress } from '@mui/material'
 
 import Title from './Title'
 
-export default function Value() {
-  const { loading, totalValue } = useController()
+interface StockPerformanceProps {
+  stock: Stock
+}
 
-  if (!loading && totalValue) {
-    return <Loaded />
+export default function StockValue(props: StockPerformanceProps) {
+  const { loading } = useController()
+  const { stock } = props
+
+  if (!loading && stock) {
+    return <Loaded stock={stock} />
   } else {
     return <Loading />
   }
 }
 
-function Loaded() {
-  const { totalValue, totalPrevValue } = useController()
-
+function Loaded(props: StockPerformanceProps) {
+  const { prices, prevPrices } = useController()
+  const { stock } = props
+  const value = stock.quantity * prices[stock.ticker]
+  const prevValue = stock.quantity * prevPrices[stock.ticker]
   const now = Date.now() // get the current timestamp
   const date = new Date(now) // create a Date object from the timestamp
 
@@ -26,10 +33,7 @@ function Loaded() {
     year: 'numeric',
   })
 
-  const percentageChange = (
-    ((totalValue - totalPrevValue) / totalPrevValue) *
-    100
-  ).toFixed(2)
+  const percentageChange = (((value - prevValue) / value) * 100).toFixed(2)
 
   return (
     <Paper
@@ -40,20 +44,17 @@ function Loaded() {
         height: 240,
       }}
     >
-      <Title>Value</Title>
+      <Title>{stock.ticker} Value</Title>
       <Typography component="p" variant="h4">
-        ${totalValue.toFixed(2)}
+        ${prices[stock.ticker]}
+      </Typography>
+      <Typography component="p" variant="h4">
+        ${value.toFixed(2)}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         on {formattedDate} ({percentageChange}%)
       </Typography>
-      <div>
-        <Link color="primary" href="#">
-          <Typography component="p" color="primary">
-            Update Portfolio
-          </Typography>
-        </Link>
-      </div>
+      <Typography color="text.secondary">{stock.quantity} shares</Typography>
     </Paper>
   )
 }

@@ -8,17 +8,9 @@ export default function AuthPage({ setUser }) {
   return (
     <main>
       {showLogin ? (
-        <SignInForm
-          setUser={setUser}
-          showLogin={showLogin}
-          setShowLogin={setShowLogin}
-        />
+        <SignInForm setUser={setUser} setShowLogin={setShowLogin} />
       ) : (
-        <SignUpForm
-          setUser={setUser}
-          showLogin={showLogin}
-          setShowLogin={setShowLogin}
-        />
+        <SignUpForm setUser={setUser} setShowLogin={setShowLogin} />
       )}
     </main>
   )

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import {
   Typography,
@@ -12,14 +12,32 @@ import {
   Avatar,
 } from '@mui/material'
 
-export default function SignInForm() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+import { userService } from '../services/userService'
+
+export default function SignInForm(props) {
+  const { setUser, setShowLogin } = props
+
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: '',
+  })
+
+  const [error, setError] = useState('')
+
+  function handleChange(evt) {
+    setCredentials({ ...credentials, [evt.target.name]: evt.target.value })
+    setError('')
+  }
+
+  async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+    // Prevent form from being submitted to the server
+    evt.preventDefault()
+    try {
+      const user = await userService.login(credentials)
+      setUser(user)
+    } catch {
+      setError('Log In Failed - Try Again')
+    }
   }
 
   return (
@@ -31,7 +49,7 @@ export default function SignInForm() {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: 'url(https://source.unsplash.com/random)',
+          backgroundImage: 'url(auth.jpg)',
           backgroundRepeat: 'no-repeat',
           backgroundColor: (t) =>
             t.palette.mode === 'light'
@@ -55,7 +73,7 @@ export default function SignInForm() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign In
           </Typography>
           <Box
             component="form"
@@ -68,6 +86,8 @@ export default function SignInForm() {
               required
               fullWidth
               id="email"
+              value={credentials.email}
+              onChange={handleChange}
               label="Email Address"
               name="email"
               autoComplete="email"
@@ -78,6 +98,8 @@ export default function SignInForm() {
               required
               fullWidth
               name="password"
+              value={credentials.password}
+              onChange={handleChange}
               label="Password"
               type="password"
               id="password"
@@ -91,11 +113,15 @@ export default function SignInForm() {
             >
               Sign In
             </Button>
-
-            <Link href="#" variant="body2">
-              {"Don't have an account? Sign Up"}
-            </Link>
           </Box>
+          <Button
+            onClick={() => {
+              setShowLogin(false)
+            }}
+          >
+            {"Don't have an account? Sign Up"}
+          </Button>
+          <p>{error}</p>
         </Box>
       </Grid>
     </Grid>

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 import {
   Typography,
   Box,
@@ -10,17 +10,45 @@ import {
   Button,
   Avatar,
 } from '@mui/material'
+
+import { userService } from '../services/userService'
+
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
-export default function SignUpForm() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+export default function SignUpForm(props) {
+  const { setUser, setShowLogin } = props
+
+  const [credentials, setCredentials] = useState<{
+    email: string
+    password: string
+    confirm?: string
+  }>({
+    email: '',
+    password: '',
+    confirm: '',
+  })
+
+  const [error, setError] = useState('')
+
+  function handleChange(evt) {
+    setCredentials({ ...credentials, [evt.target.name]: evt.target.value })
+    setError('')
   }
+
+  async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+    evt.preventDefault()
+    try {
+      const user = await userService.signUp({
+        email: credentials.email,
+        password: credentials.password,
+      })
+      setUser(user)
+    } catch {
+      setError('Sign Up Failed - Try Again')
+    }
+  }
+
+  const disable = credentials.password !== credentials.confirm
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
@@ -31,7 +59,7 @@ export default function SignUpForm() {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: 'url(https://source.unsplash.com/random)',
+          backgroundImage: 'url(auth.jpg)',
           backgroundRepeat: 'no-repeat',
           backgroundColor: (t) =>
             t.palette.mode === 'light'
@@ -55,7 +83,7 @@ export default function SignUpForm() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign Up
           </Typography>
           <Box
             component="form"
@@ -68,6 +96,8 @@ export default function SignUpForm() {
               required
               fullWidth
               id="email"
+              value={credentials.email}
+              onChange={handleChange}
               label="Email Address"
               name="email"
               autoComplete="email"
@@ -78,23 +108,43 @@ export default function SignUpForm() {
               required
               fullWidth
               name="password"
+              value={credentials.password}
+              onChange={handleChange}
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
             />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="confirm"
+              value={credentials.confirm}
+              onChange={handleChange}
+              label="Confirm"
+              type="password"
+              id="confirm"
+              autoComplete="current-password"
+            />
             <Button
               type="submit"
               fullWidth
+              disabled={disable}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
             </Button>
-            <Link href="#" variant="body2">
-              {"Don't have an account? Sign Up"}
-            </Link>
           </Box>
+          <Button
+            onClick={() => {
+              setShowLogin(true)
+            }}
+          >
+            {'Already have an account? Sign In'}
+          </Button>
+          <p>{error}</p>
         </Box>
       </Grid>
     </Grid>

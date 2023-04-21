@@ -46,5 +46,13 @@ export { checkToken, dataController, apiController };
 /** Helper function */
 
 function createJWT(user) {
-  return jwt.sign({ user }, process.env.SECRET, { expiresIn: "24h" });
+  try {
+    const token = jwt.sign({ user }, process.env.SECRET as string, {
+      expiresIn: 86400,
+    });
+    return token;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error creating JWT");
+  }
 }

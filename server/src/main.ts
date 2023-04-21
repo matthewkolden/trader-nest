@@ -16,6 +16,7 @@ app.use(morgan("dev"));
 
 const corsOptions = {
   origin: "*",
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(checkToken);
+// app.use(checkToken);
 app.use("/api/stocks", stockRouter);
 app.use("/api/users", userRouter);
 

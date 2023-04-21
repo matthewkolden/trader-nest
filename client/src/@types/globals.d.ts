@@ -4,6 +4,11 @@ interface Stock {
   quantity: number
 }
 
+interface Credentials {
+  email: string
+  password: string
+}
+
 interface Quote {
   // Current price
   c: Number

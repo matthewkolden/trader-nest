@@ -11,7 +11,7 @@ import {
 import ensureLoggedIn from "../config/ensureLoggedIn";
 
 // POST /api/users
-userRouter.post("/", dataController.create, apiController.auth);
+userRouter.post("/signup", dataController.create, apiController.auth);
 
 // Post /api/users/login
 userRouter.post("/login", dataController.login, apiController.auth);

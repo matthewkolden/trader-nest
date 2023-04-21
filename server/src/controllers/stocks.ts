@@ -1,4 +1,5 @@
 import { StockModel } from "../models/stock";
+import { UserModel } from "../models/user";
 import { Request, Response, NextFunction } from "express";
 
 const dataController = {
@@ -6,7 +7,8 @@ const dataController = {
   async index(req: Request, res: Response, next: NextFunction) {
     try {
       // const userId = req.user.id
-      const foundStocks = await StockModel.find({});
+      const userId = res.locals.data.user ? res.locals.data.user.id : null;
+      const foundStocks = await StockModel.find({ user: userId });
       res.locals.data.stocks = foundStocks;
       next();
     } catch (error: unknown) {
@@ -32,6 +34,13 @@ const dataController = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const createdStock = await StockModel.create(req.body);
+      const user = res.locals.data.user
+        ? await UserModel.findById(res.locals.data.user._id)
+        : null;
+      if (user) {
+        user.stocks.push(createdStock._id);
+        await user.save();
+      }
       res.locals.data.stock = createdStock;
       next();
     } catch (error: unknown) {

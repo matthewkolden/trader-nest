@@ -4,7 +4,9 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import { connect } from "./config/db";
-import router from "./routes/stocks";
+import stockRouter from "./routes/stocks";
+import userRouter from "./routes/users";
+import checkToken from "./config/checkToken";
 
 const PORT = process.env.PORT || 3000;
 
@@ -26,7 +28,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/stocks", router);
+app.use(checkToken);
+app.use("/api/stocks", stockRouter);
+app.use("/api/users", userRouter);
 
 app.get("/api/test", (req, res) => {
   res.json({ test: "the api is working" });

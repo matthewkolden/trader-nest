@@ -1,22 +1,17 @@
 import express, { Router } from "express";
 import { dataController, apiController } from "../controllers/stocks";
 
-const router: Router = express.Router();
-
-router.use((req, res, next) => {
-  res.locals.data = {};
-  next();
-});
+const stockRouter: Router = express.Router();
 
 // Index
-router.get("/", dataController.index, apiController.index);
+stockRouter.get("/", dataController.index, apiController.index);
 // Delete
-router.delete("/:id", dataController.destroy, apiController.show);
+stockRouter.delete("/:id", dataController.destroy, apiController.show);
 // Update
-router.put("/:id", dataController.update, apiController.show);
+stockRouter.put("/:id", dataController.update, apiController.show);
 // Create
-router.post("/", dataController.create, apiController.show);
+stockRouter.post("/", dataController.create, apiController.show);
 // Show
-router.get("/:id", dataController.show, apiController.show);
+stockRouter.get("/:id", dataController.show, apiController.show);
 
-export default router;
+export default stockRouter;

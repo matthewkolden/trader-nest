@@ -63,7 +63,7 @@ function Loaded(props: StockPerformanceProps) {
 
   const handleDelete = async () => {
     try {
-      await deleteStock(stock._id)
+      await deleteStock(stock)
       navigate('/')
     } catch {
       setError('Delete Failed - Try Again')

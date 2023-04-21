@@ -1,12 +1,20 @@
 interface Stock {
   _id?: string
   ticker: string
-  quantity: number
+  quantity?: number
+  user?: string
 }
 
 interface Credentials {
   email: string
   password: string
+}
+
+interface User {
+  _id?: string
+  email: string
+  password: string
+  stocks: Stock[]
 }
 
 interface Quote {

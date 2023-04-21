@@ -15,6 +15,10 @@ import { useController } from '../controllers/Controller'
 
 interface StockPerformanceProps {
   stock: Stock
+}
+
+interface StockChartProps {
+  stock: Stock
   weekData: {
     [key: string]: number
   }
@@ -43,7 +47,7 @@ export default function StockPerformance(props: StockPerformanceProps) {
   }
 }
 
-function Loaded(props: StockPerformanceProps) {
+function Loaded(props: StockChartProps) {
   const { ticker } = props.stock
   const { weekData, monthData, yearData } = props
 

@@ -6,9 +6,7 @@ const dataController = {
   // Index: Getting all stocks
   async index(req: Request, res: Response, next: NextFunction) {
     try {
-      // const userId = req.user.id
-      const userId = res.locals.data.user ? res.locals.data.user.id : null;
-      const foundStocks = await StockModel.find({ user: userId });
+      const foundStocks = await StockModel.find({ user: req.query.user });
       res.locals.data.stocks = foundStocks;
       next();
     } catch (error: unknown) {
@@ -34,8 +32,8 @@ const dataController = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const createdStock = await StockModel.create(req.body);
-      const user = res.locals.data.user
-        ? await UserModel.findById(res.locals.data.user._id)
+      const user = req.body.user
+        ? await UserModel.findById(req.body.user)
         : null;
       if (user) {
         user.stocks.push(createdStock._id);

@@ -3,11 +3,16 @@ import { useStockStore } from '../stores/useStockStore'
 import { TextField, Box, Button, Paper } from '@mui/material'
 import Title from './Title'
 
-export default function StockForm() {
+interface Props {
+  user: User
+}
+
+export default function StockForm(props: Props) {
+  const { user } = props
   const { createNewStock } = useStockStore()
   const [formData, setFormData] = useState({
     ticker: '',
-    quantity: null,
+    quantity: 0,
   })
 
   const [error, setError] = useState('')
@@ -19,10 +24,14 @@ export default function StockForm() {
   const handleSubmit = async (evt) => {
     evt.preventDefault()
     try {
-      await createNewStock(formData)
+      await createNewStock({
+        ticker: formData.ticker,
+        quantity: formData.quantity,
+        user: user,
+      })
       setFormData({
         ticker: '',
-        quantity: null,
+        quantity: 0,
       })
     } catch {
       setError('Creation Failed - Try Again')

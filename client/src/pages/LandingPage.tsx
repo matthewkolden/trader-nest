@@ -4,9 +4,14 @@ import StockTable from '../components/StockTable'
 import Movers from '../components/Movers'
 import StockForm from '../components/StockForm'
 
+interface Props {
+  user: User
+}
+
 import { Container, Box, Grid } from '@mui/material'
 
-export default function LandingPage() {
+export default function LandingPage(props: Props) {
+  const { user } = props
   return (
     <Box sx={{ display: 'flex' }}>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -25,7 +30,7 @@ export default function LandingPage() {
               }}
             >
               <Value />
-              <StockForm />
+              <StockForm user={user} />
               <Movers />
             </Box>
           </Grid>

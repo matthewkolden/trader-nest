@@ -17,7 +17,7 @@ class UserService {
 
   async login(credentials: Credentials) {
     const response = await this.instance.post('/login', credentials)
-    const token = response.data.token
+    const token = response.data
     localStorage.setItem('token', token)
     return this.getUser()
   }

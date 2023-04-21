@@ -38,7 +38,7 @@ export const useController = () => {
 }
 
 function useHook() {
-  const { stocks, getAllStocks } = useStockStore()
+  const { stocks } = useStockStore()
   const [prices, setPrices] = useState<Prices>({})
   const [prevPrices, setPrevPrices] = useState<Prices>({})
   const [totalValue, setTotalValue] = useState<number | null>(null)

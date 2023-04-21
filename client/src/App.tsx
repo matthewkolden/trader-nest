@@ -13,7 +13,7 @@ function App() {
   const [user, setUser] = useState(userService.getUser())
 
   useEffect(() => {
-    getAllStocks()
+    if (user) getAllStocks(user._id)
   }, [])
 
   return (
@@ -22,8 +22,8 @@ function App() {
         {user ? (
           <>
             <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/:id" element={<StockPage />} />
+              <Route path="/" element={<LandingPage user={user} />} />
+              <Route path="/:id" element={<StockPage user={user} />} />
             </Routes>
           </>
         ) : (

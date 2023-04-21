@@ -1,16 +1,18 @@
 import { useStockStore } from '../stores/useStockStore'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
-
 import StockPerformance from '../components/StockPerformance'
 import StockValue from '../components/StockValue'
 import StockTotalValue from '../components/StockTotalValue'
-import StockTableForm from '../components/StockTableForm'
 import Movers from '../components/Movers'
+
+interface Props {
+  user: User
+}
 
 import { Container, Box, Grid } from '@mui/material'
 
-export default function StockPage() {
+export default function StockPage(props: Props) {
   const params = useParams()
   const id = params.id
   const { getOneStock, stock } = useStockStore()

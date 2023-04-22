@@ -94,7 +94,7 @@ export default function SignUpForm(props: Props) {
             component="form"
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
+            sx={{ mt: 1, width: { lg: '50%' } }}
           >
             <TextField
               margin="normal"

@@ -23,8 +23,8 @@ export default function SignInForm(props: Props) {
   const { setUser, setShowLogin } = props
 
   const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
+    email: 'test@testing',
+    password: '1234',
   })
 
   const [error, setError] = useState('')
@@ -84,7 +84,7 @@ export default function SignInForm(props: Props) {
             component="form"
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
+            sx={{ mt: 1, width: { lg: '50%' } }}
           >
             <TextField
               margin="normal"

@@ -26,7 +26,7 @@ export default function StockPage(props: Props) {
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8} lg={9}>
-            <StockPerformance stock={stock} />
+            {stock && <StockPerformance stock={stock} />}
           </Grid>
           <Grid item xs={12} md={4} lg={3}>
             <Box
@@ -38,8 +38,12 @@ export default function StockPage(props: Props) {
                 justifyContent: 'space-between',
               }}
             >
-              <StockValue stock={stock} />
-              <StockTotalValue stock={stock} />
+              {stock && (
+                <>
+                  <StockValue stock={stock} />
+                  <StockTotalValue stock={stock} />
+                </>
+              )}
               <Movers />
             </Box>
           </Grid>

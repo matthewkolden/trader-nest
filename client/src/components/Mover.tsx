@@ -18,7 +18,9 @@ export default function Mover(props: MoverProps) {
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
       <TableCell component="th" scope="row">
-        <Link to={`/${id}`}>{name}</Link>
+        <Link to={`/${id}`} style={{ textDecoration: 'none' }}>
+          {name}
+        </Link>
       </TableCell>
       <TableCell align="right">({change}%)</TableCell>
       <TableCell align="right">{price}</TableCell>

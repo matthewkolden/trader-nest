@@ -1,21 +1,29 @@
 import { useController } from '../controllers/Controller'
+import { useStockStore } from '../stores/useStockStore'
 
-import { Typography, Link, Paper, CircularProgress } from '@mui/material'
+import { Typography, Paper, CircularProgress } from '@mui/material'
 
 import Title from './Title'
 
-export default function Value() {
-  const { loading, totalValue } = useController()
+interface Props {
+  totalValue: number | null
+  totalPrevValue: number | null
+}
 
-  if (!loading && totalValue) {
-    return <Loaded />
+export default function Value() {
+  const { loading, totalValue, totalPrevValue } =
+    useController() as ControllerState
+  const { stocks } = useStockStore()
+
+  if (!loading) {
+    return <Loaded totalValue={totalValue} totalPrevValue={totalPrevValue} />
   } else {
     return <Loading />
   }
 }
 
-function Loaded() {
-  const { totalValue, totalPrevValue } = useController()
+function Loaded(props: Props) {
+  const { totalValue, totalPrevValue } = props
 
   const now = Date.now() // get the current timestamp
   const date = new Date(now) // create a Date object from the timestamp
@@ -26,10 +34,12 @@ function Loaded() {
     year: 'numeric',
   })
 
-  const percentageChange = (
-    ((totalValue - totalPrevValue) / totalPrevValue) *
-    100
-  ).toFixed(2)
+  const value = totalValue ? totalValue.toFixed(2) : 0
+
+  const percentageChange =
+    totalValue && totalPrevValue
+      ? (((totalValue - totalPrevValue) / totalPrevValue) * 100).toFixed(2)
+      : 0
 
   return (
     <Paper
@@ -42,7 +52,7 @@ function Loaded() {
     >
       <Title>Value</Title>
       <Typography component="p" variant="h4">
-        ${totalValue.toFixed(2)}
+        ${value}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         on {formattedDate} ({percentageChange}%)

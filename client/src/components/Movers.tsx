@@ -16,7 +16,7 @@ import Title from './Title'
 import Mover from './Mover'
 
 export default function Movers() {
-  const { loading } = useController()
+  const { loading } = useController() as ControllerState
 
   if (!loading) {
     return <Loaded />
@@ -27,7 +27,7 @@ export default function Movers() {
 
 function Loaded() {
   const { stocks } = useStockStore()
-  const { prices, prevPrices } = useController()
+  const { prices, prevPrices } = useController() as ControllerState
 
   const sortedStocks = [...stocks].sort((a, b) => {
     const aChange = Math.abs(

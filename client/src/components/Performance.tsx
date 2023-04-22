@@ -13,20 +13,15 @@ import {
 import Title from './Title'
 import { useController } from '../controllers/Controller'
 
-interface PerformanceProps {
-  weekData: {
-    [key: string]: number
-  }
-  monthData: {
-    [key: string]: number
-  }
-  yearData: {
-    [key: string]: number
-  }
+interface Props {
+  weekData: HistoricalPrices
+  monthData: HistoricalPrices
+  yearData: HistoricalPrices
 }
 
 export default function Performance() {
-  const { loading, weekData, monthData, yearData } = useController()
+  const { loading, weekData, monthData, yearData } =
+    useController() as ControllerState
 
   if (!loading && weekData && monthData && yearData) {
     return (
@@ -37,12 +32,12 @@ export default function Performance() {
   }
 }
 
-function Loaded(props: PerformanceProps) {
+function Loaded(props: Props) {
   const { weekData, monthData, yearData } = props
   const [lineData, setLineData] = useState(weekData)
 
   const data = Object.entries(lineData).map(([date, values]) => {
-    return { x: new Date(date * 1000), y: values.total }
+    return { x: new Date(Number(date) * 1000), y: values.total }
   })
 
   return (

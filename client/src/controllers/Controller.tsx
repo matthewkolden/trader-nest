@@ -14,16 +14,6 @@ type Props = {
   children: ReactNode
 }
 
-type Prices = {
-  [key: string]: number
-}
-
-type HistoricalPrices = {
-  [key: number]: {
-    [key: string]: number
-  }
-}
-
 export function ProvideController({ children }: Props) {
   const provider = useHook()
   return (
@@ -37,13 +27,13 @@ export const useController = () => {
   return useContext(ControllerContext)
 }
 
-function useHook() {
+function useHook(): ControllerState {
   const { stocks } = useStockStore()
   const [prices, setPrices] = useState<Prices>({})
+  const [loading, setLoading] = useState(false)
   const [prevPrices, setPrevPrices] = useState<Prices>({})
   const [totalValue, setTotalValue] = useState<number | null>(null)
   const [totalPrevValue, setTotalPrevValue] = useState<number | null>(null)
-  const [loading, setLoading] = useState(false)
 
   const [weekData, setWeekData] = useState<HistoricalPrices>({})
   const [monthData, setMonthData] = useState<HistoricalPrices>({})
@@ -78,9 +68,13 @@ function useHook() {
         }
         newWeekData[date][stock.ticker] = price
         if (!newWeekData[date]['total']) {
-          newWeekData[date]['total'] = price * stock.quantity
+          newWeekData[date]['total'] = stock.quantity
+            ? price * stock.quantity
+            : 0
         } else {
-          newWeekData[date]['total'] += price * stock.quantity
+          newWeekData[date]['total'] += stock.quantity
+            ? price * stock.quantity
+            : 0
         }
       }
     }
@@ -105,9 +99,13 @@ function useHook() {
         }
         newMonthData[date][stock.ticker] = price
         if (!newMonthData[date]['total']) {
-          newMonthData[date]['total'] = price * stock.quantity
+          newMonthData[date]['total'] = stock.quantity
+            ? price * stock.quantity
+            : 0
         } else {
-          newMonthData[date]['total'] += price * stock.quantity
+          newMonthData[date]['total'] += stock.quantity
+            ? price * stock.quantity
+            : 0
         }
       }
     }
@@ -130,9 +128,13 @@ function useHook() {
         }
         newYearData[date][stock.ticker] = price
         if (!newYearData[date]['total']) {
-          newYearData[date]['total'] = price * stock.quantity
+          newYearData[date]['total'] = stock.quantity
+            ? price * stock.quantity
+            : 0
         } else {
-          newYearData[date]['total'] += price * stock.quantity
+          newYearData[date]['total'] += stock.quantity
+            ? price * stock.quantity
+            : 0
         }
       }
     }
@@ -145,7 +147,7 @@ function useHook() {
     if (Object.keys(prices).length > 0) {
       let sum = 0
       for (const stock of stocks) {
-        sum += prices[stock.ticker] * stock.quantity
+        sum += stock.quantity ? prices[stock.ticker] * stock.quantity : 0
       }
       setTotalValue(sum)
     }
@@ -153,7 +155,7 @@ function useHook() {
     if (Object.keys(prevPrices).length > 0) {
       let sum = 0
       for (const stock of stocks) {
-        sum += prevPrices[stock.ticker] * stock.quantity
+        sum += stock.quantity ? prevPrices[stock.ticker] * stock.quantity : 0
       }
       setTotalPrevValue(sum)
     }

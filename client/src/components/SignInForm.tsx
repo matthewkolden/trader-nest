@@ -14,7 +14,12 @@ import {
 
 import { userService } from '../services/userService'
 
-export default function SignInForm(props) {
+interface Props {
+  setUser: React.Dispatch<any>
+  setShowLogin: React.Dispatch<any>
+}
+
+export default function SignInForm(props: Props) {
   const { setUser, setShowLogin } = props
 
   const [credentials, setCredentials] = useState({
@@ -24,7 +29,7 @@ export default function SignInForm(props) {
 
   const [error, setError] = useState('')
 
-  function handleChange(evt) {
+  function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
     setCredentials({ ...credentials, [evt.target.name]: evt.target.value })
     setError('')
   }

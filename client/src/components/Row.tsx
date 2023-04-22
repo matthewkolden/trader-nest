@@ -1,16 +1,16 @@
 import { TableRow, TableCell } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-interface RowProps {
+interface Props {
   name: string
-  qty: number
+  qty?: number
   price: number
-  id?: number
+  id?: String
 }
 
-export default function Row(props: RowProps) {
+export default function Row(props: Props) {
   const { name, qty, price, id } = props
-  const value = (qty * price).toFixed(2)
+  const value = qty ? (qty * price).toFixed(2) : 0
 
   return (
     <TableRow

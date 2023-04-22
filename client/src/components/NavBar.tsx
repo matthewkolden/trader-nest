@@ -3,7 +3,11 @@ import { userService } from '../services/userService'
 import { Link } from 'react-router-dom'
 import { AppBar, Box, Toolbar, Typography, Button } from '@mui/material'
 
-export default function NavBar(props) {
+interface Props {
+  setUser: React.Dispatch<any>
+}
+
+export default function NavBar(props: Props) {
   const { setUser } = props
   return (
     <Box sx={{ flexGrow: 1 }}>

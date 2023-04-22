@@ -1,14 +1,14 @@
 import { TableRow, TableCell } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-interface MoverProps {
+interface Props {
   name: string
   price: number
   prevPrice: number
-  id?: number
+  id?: string
 }
 
-export default function Mover(props: MoverProps) {
+export default function Mover(props: Props) {
   const { name, price, prevPrice, id } = props
   const change = (((price - prevPrice) / price) * 100).toFixed(2)
 

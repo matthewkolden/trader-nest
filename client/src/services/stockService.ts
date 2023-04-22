@@ -13,7 +13,7 @@ class StockService {
     return data
   }
 
-  async getAll(user: string): Promise<User> {
+  async getAll(user?: string): Promise<User> {
     return await this.instance.get('/', { params: { user: user } })
   }
   async getOne(id: string) {
@@ -25,7 +25,7 @@ class StockService {
   async update(stock: Stock) {
     return await this.instance.put(`/${stock._id}`, { ...stock })
   }
-  async delete(id: string) {
+  async delete(id?: string) {
     return await this.instance.delete(`/${id}`)
   }
 }

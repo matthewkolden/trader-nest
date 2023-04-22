@@ -12,13 +12,11 @@ import {
   Table,
 } from '@mui/material'
 
-import StockForm from './StockForm'
-
 import Title from './Title'
 
 export default function StockTable() {
   const { stocks } = useStockStore()
-  const { prices } = useController()
+  const { prices } = useController() as ControllerState
 
   return (
     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
@@ -40,7 +38,7 @@ export default function StockTable() {
                 name={stock.ticker}
                 qty={stock.quantity}
                 price={prices[stock.ticker]}
-                id={stock._id}
+                id={String(stock._id)}
                 key={index}
               />
             ))}

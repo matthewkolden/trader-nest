@@ -17,21 +17,16 @@ interface StockPerformanceProps {
   stock: Stock
 }
 
-interface StockChartProps {
+interface Props {
   stock: Stock
-  weekData: {
-    [key: string]: number
-  }
-  monthData: {
-    [key: string]: number
-  }
-  yearData: {
-    [key: string]: number
-  }
+  weekData: HistoricalPrices
+  monthData: HistoricalPrices
+  yearData: HistoricalPrices
 }
 
 export default function StockPerformance(props: StockPerformanceProps) {
-  const { loading, weekData, monthData, yearData } = useController()
+  const { loading, weekData, monthData, yearData } =
+    useController() as ControllerState
   const { stock } = props
   if (!loading && stock && weekData && monthData && yearData) {
     return (
@@ -47,14 +42,14 @@ export default function StockPerformance(props: StockPerformanceProps) {
   }
 }
 
-function Loaded(props: StockChartProps) {
+function Loaded(props: Props) {
   const { ticker } = props.stock
   const { weekData, monthData, yearData } = props
 
   const [lineData, setLineData] = useState(weekData)
 
   const data = Object.entries(lineData).map(([date, values]) => {
-    return { x: new Date(date * 1000), y: values[ticker] }
+    return { x: new Date(Number(date) * 1000), y: values[ticker] }
   })
 
   return (

@@ -9,7 +9,7 @@ interface StockPerformanceProps {
 }
 
 export default function StockValue(props: StockPerformanceProps) {
-  const { loading } = useController()
+  const { loading } = useController() as ControllerState
   const { stock } = props
 
   if (!loading && stock) {
@@ -20,10 +20,12 @@ export default function StockValue(props: StockPerformanceProps) {
 }
 
 function Loaded(props: StockPerformanceProps) {
-  const { prices, prevPrices } = useController()
+  const { prices, prevPrices } = useController() as ControllerState
   const { stock } = props
-  const value = stock.quantity * prices[stock.ticker]
-  const prevValue = stock.quantity * prevPrices[stock.ticker]
+  const value = stock.quantity ? stock.quantity * prices[stock.ticker] : 0
+  const prevValue = stock.quantity
+    ? stock.quantity * prevPrices[stock.ticker]
+    : 0
   const now = Date.now() // get the current timestamp
   const date = new Date(now) // create a Date object from the timestamp
 

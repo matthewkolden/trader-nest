@@ -14,12 +14,12 @@ import {
 
 import Title from './Title'
 
-interface StockPerformanceProps {
+interface Props {
   stock: Stock
 }
 
-export default function StockTotalValue(props: StockPerformanceProps) {
-  const { loading } = useController()
+export default function StockTotalValue(props: Props) {
+  const { loading } = useController() as ControllerState
   const { stock } = props
 
   if (!loading && stock) {
@@ -29,29 +29,30 @@ export default function StockTotalValue(props: StockPerformanceProps) {
   }
 }
 
-function Loaded(props: StockPerformanceProps) {
-  const { prices } = useController()
+function Loaded(props: Props) {
+  const { prices } = useController() as ControllerState
   const { stock } = props
   const navigate = useNavigate()
-  const value = stock.quantity * prices[stock.ticker]
+  const value = stock.quantity ? stock.quantity * prices[stock.ticker] : 0
   const { updateStock, deleteStock } = useStockStore()
   const [formData, setFormData] = useState({
-    quantity: null,
+    quantity: 0,
   })
 
-  function handleChange(evt) {
+  function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [evt.target.name]: evt.target.value })
   }
 
   const [error, setError] = useState('')
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
     try {
       await updateStock({
         ticker: stock.ticker,
         quantity: formData.quantity,
         _id: stock._id,
+        user: stock.user,
       })
       setFormData({
         quantity: formData.quantity,

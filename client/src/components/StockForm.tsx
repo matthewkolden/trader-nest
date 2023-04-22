@@ -17,17 +17,17 @@ export default function StockForm(props: Props) {
 
   const [error, setError] = useState('')
 
-  function handleChange(evt) {
+  function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [evt.target.name]: evt.target.value })
   }
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
     try {
       await createNewStock({
         ticker: formData.ticker,
         quantity: formData.quantity,
-        user: user,
+        user: user._id,
       })
       setFormData({
         ticker: '',
@@ -77,6 +77,7 @@ export default function StockForm(props: Props) {
         >
           Add Stock
         </Button>
+        <p>{error}</p>
       </Box>
     </Paper>
   )

@@ -15,7 +15,12 @@ import { userService } from '../services/userService'
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
-export default function SignUpForm(props) {
+interface Props {
+  setUser: React.Dispatch<any>
+  setShowLogin: React.Dispatch<any>
+}
+
+export default function SignUpForm(props: Props) {
   const { setUser, setShowLogin } = props
 
   const [credentials, setCredentials] = useState<{
@@ -30,7 +35,7 @@ export default function SignUpForm(props) {
 
   const [error, setError] = useState('')
 
-  function handleChange(evt) {
+  function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
     setCredentials({ ...credentials, [evt.target.name]: evt.target.value })
     setError('')
   }

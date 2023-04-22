@@ -3,7 +3,7 @@ import { useStockStore } from './stores/useStockStore'
 import { ProvideController } from './controllers/Controller'
 import { Route, Routes } from 'react-router-dom'
 import { userService } from './services/userService'
-import { createTheme, useTheme } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
 
 import AuthPage from './pages/AuthPage'
 import LandingPage from './pages/LandingPage'
@@ -34,7 +34,7 @@ function App() {
 
   useEffect(() => {
     if (user) getAllStocks(user._id)
-  }, [])
+  }, [user])
 
   return (
     <div className="App">

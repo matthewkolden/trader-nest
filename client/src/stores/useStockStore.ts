@@ -3,7 +3,7 @@ import { stockService } from '../services/stockService'
 
 interface StockStore {
   stocks: Stock[]
-  stock: Stock
+  stock?: Stock | null
   getAllStocks: (user?: string) => Promise<void>
   createNewStock: (stock: Stock) => Promise<void>
   getOneStock: (id?: string) => Promise<void>
@@ -11,24 +11,15 @@ interface StockStore {
   deleteStock: (stock: Stock) => Promise<void>
 }
 
-const defaultStock: Stock = {
-  user: '0',
-  ticker: '',
-  quantity: 0,
-  _id: '0',
-}
-
 export const useStockStore = create<StockStore>((set, get) => ({
   stocks: [],
-  stock: defaultStock,
+  stock: null,
 
   getAllStocks: async (user) => {
     try {
       const data = await stockService.getAll(user)
       // @ts-ignore
-      set((state) => ({
-        stocks: data,
-      }))
+      set({ stocks: data })
     } catch (error) {
       console.error(error)
     }
@@ -46,13 +37,8 @@ export const useStockStore = create<StockStore>((set, get) => ({
   getOneStock: async (id) => {
     try {
       const data = await stockService.getOne(String(id))
-      set((state) => ({
-        stock: {
-          ticker: data.ticker,
-          quantity: data.quantity,
-          _id: data._id,
-        },
-      }))
+      // @ts-ignore
+      set({ stock: data })
     } catch (error) {
       console.error(error)
     }
@@ -62,6 +48,7 @@ export const useStockStore = create<StockStore>((set, get) => ({
     try {
       await stockService.update(stock)
       await get().getAllStocks(stock.user)
+      await get().getOneStock(stock._id)
     } catch (error) {
       console.error(error)
     }

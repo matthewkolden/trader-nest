@@ -4,7 +4,7 @@ class UserService {
   private instance: AxiosInstance
   constructor() {
     this.instance = axios.create({
-      baseURL: 'http://localhost:3000/api/users',
+      baseURL: 'https://trader-nest-production.up.railway.app/api/users',
     })
   }
 

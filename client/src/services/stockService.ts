@@ -4,7 +4,7 @@ class StockService {
   private instance: AxiosInstance
   constructor() {
     this.instance = axios.create({
-      baseURL: 'http://localhost:3000/api/stocks',
+      baseURL: 'https://trader-nest-production.up.railway.app/api/stocks',
     })
     this.instance.interceptors.response.use(this.responseInterceptor)
   }

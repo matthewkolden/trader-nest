@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 
-const API_KEY = import.meta.env.VITE_API_KEY
+const API_KEY = import.meta.env.VITE_API_KEY || process.env.VITE_API_KEY
 
 // One day ago from 9 pm UTC today
 const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)

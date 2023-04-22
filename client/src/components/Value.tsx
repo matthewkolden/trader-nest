@@ -47,13 +47,6 @@ function Loaded() {
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         on {formattedDate} ({percentageChange}%)
       </Typography>
-      <div>
-        <Link color="primary" href="#">
-          <Typography component="p" color="primary">
-            Update Portfolio
-          </Typography>
-        </Link>
-      </div>
     </Paper>
   )
 }
@@ -70,6 +63,7 @@ function Loading() {
         height: 240,
       }}
     >
+      <Title>Value</Title>
       <CircularProgress />
     </Paper>
   )

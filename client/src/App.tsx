@@ -16,13 +16,13 @@ export const themeOptions: ThemeOptions = {
   palette: {
     mode: 'light',
     primary: {
-      main: '#3f51b5',
+      main: '#105c2e',
     },
     secondary: {
       main: '#f50057',
     },
     background: {
-      default: '#eaeaea',
+      default: '#e6e6e6',
     },
   },
 }

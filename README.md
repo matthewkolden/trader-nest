@@ -1,5 +1,9 @@
 # TraderNest
 TraderNest is a web application created using the MERN stack to keep track of different stock holdings you may own or want to monitor. The application uses the FinnHub API to gather financial information about each stock that has been added, and its historical price is visualized by a Victory graph over the time spans of a week, month, or year.
+
+## UPDATE
+The API used to gather stock information has been changed from Finnhub to TwelveData, since one of the functionalities used to create the price graphs have been paywalled.
+
 ## Features
 
 -   User authentication system: register and log in to your account

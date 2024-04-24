@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b70da98f-1537-47e1-94ae-8b0721c2b041/deploy-status)](https://app.netlify.com/sites/trader-nest/deploys)
+
 # TraderNest
 TraderNest is a web application created using the MERN stack to keep track of different stock holdings you may own or want to monitor. The application uses the FinnHub API to gather financial information about each stock that has been added, and its historical price is visualized by a Victory graph over the time spans of a week, month, or year.
 

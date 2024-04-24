@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import { ButtonGroup, Button, Paper, CircularProgress } from '@mui/material'
+import { ButtonGroup, Button, Paper, CircularProgress } from "@mui/material";
 import {
   VictoryLine,
   VictoryChart,
@@ -8,26 +8,26 @@ import {
   VictoryVoronoiContainer,
   VictoryTheme,
   VictoryAxis,
-} from 'victory'
+} from "victory";
 
-import Title from './Title'
-import { useController } from '../controllers/Controller'
+import Title from "./Title";
+import { useController } from "../controllers/Controller";
 
 interface StockPerformanceProps {
-  stock: Stock
+  stock: Stock;
 }
 
 interface Props {
-  stock: Stock
-  weekData: HistoricalPrices
-  monthData: HistoricalPrices
-  yearData: HistoricalPrices
+  stock: Stock;
+  weekData: HistoricalPrices;
+  monthData: HistoricalPrices;
+  yearData: HistoricalPrices;
 }
 
 export default function StockPerformance(props: StockPerformanceProps) {
   const { loading, weekData, monthData, yearData } =
-    useController() as ControllerState
-  const { stock } = props
+    useController() as ControllerState;
+  const { stock } = props;
   if (!loading && stock && weekData && monthData && yearData) {
     return (
       <Loaded
@@ -36,53 +36,53 @@ export default function StockPerformance(props: StockPerformanceProps) {
         monthData={monthData}
         yearData={yearData}
       />
-    )
+    );
   } else {
-    return <Loading />
+    return <Loading />;
   }
 }
 
 function Loaded(props: Props) {
-  const { ticker } = props.stock
-  const { weekData, monthData, yearData } = props
+  const { ticker } = props.stock;
+  const { weekData, monthData, yearData } = props;
 
-  const [lineData, setLineData] = useState(weekData)
+  const [lineData, setLineData] = useState(weekData);
 
   const data = Object.entries(lineData).map(([date, values]) => {
-    return { x: new Date(date), y: values[ticker] }
-  })
+    return { x: new Date(date), y: values[ticker] };
+  });
 
   return (
     <Paper
       sx={{
         p: 2,
-        display: 'flex',
-        flexDirection: 'column',
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Title>{ticker} Performance</Title>
       <ButtonGroup
         variant="contained"
         aria-label="outlined primary button group"
-        sx={{ alignSelf: 'center' }}
+        sx={{ alignSelf: "center" }}
       >
         <Button
           onClick={() => {
-            setLineData(weekData)
+            setLineData(weekData);
           }}
         >
           Week
         </Button>
         <Button
           onClick={() => {
-            setLineData(monthData)
+            setLineData(monthData);
           }}
         >
           Month
         </Button>
         <Button
           onClick={() => {
-            setLineData(yearData)
+            setLineData(yearData);
           }}
         >
           Year
@@ -92,21 +92,21 @@ function Loaded(props: Props) {
         containerComponent={<VictoryVoronoiContainer />}
         theme={VictoryTheme.material}
       >
-        <VictoryAxis tickFormat={(tick) => ''} label="Time" />
+        <VictoryAxis tickFormat={(tick) => ""} label="Time" />
         <VictoryAxis dependentAxis />
         <VictoryLine
           labelComponent={<VictoryTooltip />}
           data={data}
-          labels={({ datum }) => datum.x + '\n' + datum.y}
+          labels={({ datum }) => datum.x + "\n" + datum.y}
           style={{
             data: {
-              stroke: '#02B875',
+              stroke: "#02B875",
             },
           }}
         />
       </VictoryChart>
     </Paper>
-  )
+  );
 }
 
 function Loading() {
@@ -114,14 +114,14 @@ function Loading() {
     <Paper
       sx={{
         p: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
         height: 240,
       }}
     >
       <CircularProgress />
     </Paper>
-  )
+  );
 }

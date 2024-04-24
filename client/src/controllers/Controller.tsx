@@ -54,7 +54,6 @@ function useHook(): ControllerState {
     setLoading(false);
   }
 
-
   async function fetchData() {
     setLoading(true);
     const newWeekData: HistoricalPrices = {};
@@ -130,6 +129,17 @@ function useHook(): ControllerState {
     }
   }
 
+  function reset() {
+    setPrices({});
+    setLoading(false);
+    setPrevPrices({});
+    setTotalValue(null);
+    setTotalPrevValue(null);
+    setWeekData({});
+    setMonthData({});
+    setYearData({});
+  }
+
   useEffect(() => {
     fetchPrice();
     fetchData();
@@ -149,5 +159,6 @@ function useHook(): ControllerState {
     totalValue,
     totalPrevValue,
     loading,
+    reset, 
   };
 }

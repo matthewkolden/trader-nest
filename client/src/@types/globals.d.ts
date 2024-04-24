@@ -44,4 +44,5 @@ interface ControllerState {
   totalValue: number | null
   totalPrevValue: number | null
   loading: boolean
+  reset: () => void
 }

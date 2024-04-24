@@ -11,6 +11,7 @@ import StockPage from './pages/StockPage'
 import NavBar from './components/NavBar'
 
 import { ThemeOptions, ThemeProvider } from '@mui/material/styles'
+import { useController } from './controllers/Controller'
 
 export const themeOptions: ThemeOptions = {
   palette: {
@@ -27,12 +28,17 @@ export const themeOptions: ThemeOptions = {
   },
 }
 
+
 function App() {
   const theme = createTheme(themeOptions)
   const { getAllStocks } = useStockStore()
   const [user, setUser] = useState(userService.getUser())
+  const { reset } = useController()
+
+
 
   useEffect(() => {
+    reset;
     if (user) getAllStocks(user._id)
   }, [user])
 

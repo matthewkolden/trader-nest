@@ -1,48 +1,48 @@
 interface Stock {
-  _id?: string
-  ticker: string
-  quantity?: number
-  user?: string
+  _id?: string;
+  ticker: string;
+  quantity?: number;
+  user?: string;
 }
 
 interface Credentials {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 interface User {
-  _id?: string
-  email: string
-  password: string
-  stocks: Stock[]
+  _id?: string;
+  email: string;
+  password: string;
+  stocks: Stock[];
 }
 
 interface Price {
   // Stock name
-  ticker: string
+  ticker: string;
   // Current price
-  c: Number
+  c: string;
 }
 
 type Prices = {
-  [key: string]: number
-}
+  [key: string]: number;
+};
 
 type HistoricalPrices = {
-  [key: number]: {
-    [key: string]: number
-  }
-}
+  [key: string]: {
+    [key: string]: number;
+  };
+};
 
 interface ControllerState {
-  prices: Prices
-  prevPrices: Prices
-  fetchPrice: () => Promise<void>
-  weekData: HistoricalPrices
-  monthData: HistoricalPrices
-  yearData: HistoricalPrices
-  totalValue: number | null
-  totalPrevValue: number | null
-  loading: boolean
-  reset: () => void
+  prices: Prices;
+  prevPrices: Prices;
+  fetchPrice: () => Promise<void>;
+  weekData: HistoricalPrices;
+  monthData: HistoricalPrices;
+  yearData: HistoricalPrices;
+  totalValue: number | null;
+  totalPrevValue: number | null;
+  loading: boolean;
+  reset: () => void;
 }

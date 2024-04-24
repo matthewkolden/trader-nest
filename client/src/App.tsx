@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useStockStore } from './stores/useStockStore'
-import { ProvideController } from './controllers/Controller'
+import { ProvideController, useController } from './controllers/Controller'
 import { Route, Routes } from 'react-router-dom'
 import { userService } from './services/userService'
 import { createTheme } from '@mui/material/styles'
@@ -11,7 +11,7 @@ import StockPage from './pages/StockPage'
 import NavBar from './components/NavBar'
 
 import { ThemeOptions, ThemeProvider } from '@mui/material/styles'
-import { useController } from './controllers/Controller'
+import {  } from './controllers/Controller'
 
 export const themeOptions: ThemeOptions = {
   palette: {
@@ -33,9 +33,7 @@ function App() {
   const theme = createTheme(themeOptions)
   const { getAllStocks } = useStockStore()
   const [user, setUser] = useState(userService.getUser())
-  const { reset } = useController()
-
-
+  const { reset } = useController() as ControllerState;
 
   useEffect(() => {
     reset;

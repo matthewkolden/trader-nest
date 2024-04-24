@@ -46,8 +46,8 @@ function useHook(): ControllerState {
     const newPrevPrices: Prices = {};
     for (const stock of stocks) {
       const { current, close } = await twelveDataService.getQuote(stock.ticker);
-      newPrices[stock.ticker] = current;
-      newPrevPrices[stock.ticker] = close;
+      newPrices[stock.ticker] = parseFloat(current);
+      newPrevPrices[stock.ticker] = parseFloat(close);
     }
     setPrices(newPrices);
     setPrevPrices(newPrevPrices);

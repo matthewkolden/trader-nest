@@ -49,7 +49,7 @@ function Loaded(props: Props) {
   const [lineData, setLineData] = useState(weekData)
 
   const data = Object.entries(lineData).map(([date, values]) => {
-    return { x: new Date(Number(date) * 1000), y: values[ticker] }
+    return { x: new Date(date), y: values[ticker] }
   })
 
   return (
@@ -97,7 +97,7 @@ function Loaded(props: Props) {
         <VictoryLine
           labelComponent={<VictoryTooltip />}
           data={data}
-          labels={({ datum }) => datum.x + '\n' + datum.y.toFixed(2)}
+          labels={({ datum }) => datum.x + '\n' + datum.y}
           style={{
             data: {
               stroke: '#02B875',

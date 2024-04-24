@@ -81,7 +81,7 @@ function Loaded(props: Props) {
         theme={VictoryTheme.material}
       >
         <VictoryAxis tickFormat={(tick) => ""} label="Time" />
-        <VictoryAxis dependentAxis tickFormat={(tick) => tick / 1000} />
+        <VictoryAxis dependentAxis tickFormat={(tick) => ""} label="Price" />
         <VictoryLine
           labelComponent={<VictoryTooltip />}
           data={data}

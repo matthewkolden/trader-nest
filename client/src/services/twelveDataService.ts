@@ -16,7 +16,7 @@ class TwelveDataService {
     );
 
     const responseCurrent = await this.instance.get(
-      `/price?symbol=AAPL&apikey=${API_KEY}`
+      `/price?symbol=${ticker}&apikey=${API_KEY}`
     );
     const current = Number(responseCurrent.data.price).toFixed(2);
     const close = Number(responseClose.data.close).toFixed(2);

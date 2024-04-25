@@ -29,11 +29,14 @@ class TwelveDataService {
       `/time_series?symbol=${ticker}&interval=1day&outputsize=365&apikey=${API_KEY}`
     );
     const data = response.data.values;
-    const dates: string[] = data.map((item: any) => item.datetime.split(" ")[0]);
-    const prices: number[] = data.map((item: any) => item.close);
+    const dates: string[] = data.map(
+      (item: any) => item.datetime.split(" ")[0]
+    );
+    const prices: number[] = data.map((item: any) =>
+      Number(item.close).toFixed(2)
+    );
     return { prices, dates };
   }
-
 }
 
 export const twelveDataService = new TwelveDataService();

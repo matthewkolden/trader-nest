@@ -37,7 +37,6 @@ type HistoricalPrices = {
 interface ControllerState {
   prices: Prices;
   prevPrices: Prices;
-  fetchPrice: () => Promise<void>;
   weekData: HistoricalPrices;
   monthData: HistoricalPrices;
   yearData: HistoricalPrices;

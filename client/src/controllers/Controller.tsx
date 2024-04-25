@@ -64,8 +64,8 @@ function useHook(): ControllerState {
       const { prices, dates } = await twelveDataService.getDailyHistoricalData(
         stock.ticker
       );
-      const last7Days = dates.slice(-7);
-      const last30Days = dates.slice(-30);
+      const last7Days = dates.slice(0, 7);
+      const last30Days = dates.slice(0, 30);
       const last365Days = dates;
 
       for (let i = 0; i < last7Days.length; i++) {
@@ -152,7 +152,6 @@ function useHook(): ControllerState {
   return {
     prices,
     prevPrices,
-    fetchPrice,
     weekData,
     monthData,
     yearData,
